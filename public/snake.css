@@ -1,0 +1,100 @@
+body{
+    background-color: #003366;
+    font-family: 'VT323', monospace;
+    margin: 0;
+    color:#e6f2ff;
+    user-select: none;
+}
+.upper{
+    width: 100%;
+    margin: auto;
+    height: 100px;
+    background: #00264d;
+    display: flex;
+    justify-content: space-evenly;
+}
+canvas{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0px 3px 5px black;
+    position: relative;
+    top: 30px;
+}
+.main{
+    width: 100%;
+    padding-bottom: 30px;
+    display: flex;
+    justify-content: space-around;
+}
+.buttonHolder{
+    margin-left: auto;
+    margin-right: auto;
+}
+.bottom{
+    position: relative;
+    top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.controls{
+    font-family: 'VT323', monospace;
+    color: white;
+    background: transparent;
+    border-radius: 5px;
+    border: #80bfff 1px solid;
+    outline:none;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+}
+.eitherSides{
+    position: relative;
+    top:30px;
+    height: 97%;
+    width: 20%;
+    font-size: 30px;
+}
+.tabs, #miscBox{
+    border-radius: 5px;
+    border: #80bfff 1px solid;
+    padding:5px;
+    width: 90%;
+}
+.tabs{
+    height: 40px;
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+.controls:hover, .tabs:hover{
+    color: black;
+    background-color: #80bfff;
+}
+#miscBox{
+    position: relative;
+    top: 5px;
+    text-align: center;
+    text-align: center;
+}
+#miscBox li{
+    font-size: 23px;
+    margin-top: 15px;
+}
+.scoreUpdates{
+    background-color: #80bfff;
+    color: black;
+}
+a{
+    text-decoration: none;
+    color: inherit;
+}
+@media (max-width:1050px){
+    .eitherSides{
+        display: none;
+    }
+}

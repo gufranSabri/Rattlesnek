@@ -1,0 +1,69 @@
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+
+        link(rel="stylesheet" type="text/css" href="/snake.css")
+        link(rel='shortcut icon' type='image/png' href='/Images/l.png')
+        link(rel="preconnect" href="https://fonts.gstatic.com")
+        link(href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet")
+
+        script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+        
+        title Rattlesnek - Play
+
+    script.
+        var highscore=parseInt('!{highscore}')
+    body
+        .upper
+            img(src="/Images/l.png" width="75px" height="75px" style="position:relative;top:10px")
+        .main
+            .eitherSides
+                a(href="/leaderboard" target="_blank")
+                    .tabs#leaderboard
+                        span Leaderboard
+                .tabs#settings
+                    span Settings
+                .tabs#logout
+                    span Log out
+                #miscBox.scoreUpdates
+                    span#highscore Highscore: #{highscore}
+                    br
+                    span#score Score: n/a
+                    br
+                    span#logs ....
+            div
+                canvas#cvs
+            .eitherSides
+                #miscBox(style="text-align: left;")
+                    ul
+                        li 
+                            span Press the start button or press space to play
+                        li 
+                            span Use arrow keys or on screen buttons to move
+                        li 
+                            span Collect apples and keep the doctor away ;)
+                        li 
+                            span You can press space to pause
+                        li 
+                            span Enjoy!
+
+        .bottom
+            .buttonHolder
+                button.controls#play(style="width:100px") Start
+            br
+            .buttonHolder
+                button.controls#up
+                    img(src="/Images/arrowUp.png" height="14px" width="19px")
+            .buttonHolder
+                button.controls#left(style="position:relative; top:2px;right:2px")
+                    img(src="/Images/arrowLeft.png" height="19px" width="14px")
+                button.controls#down
+                    img(src="/Images/arrowDown.png" height="14px" width="19px")
+                button.controls#right(style="position:relative; top:2px;left:2px")
+                    img(src="/Images/arrowRight.png" height="19px" width="14px")
+            .buttonHolder
+                
+        
+        script(src="/snake.js")
