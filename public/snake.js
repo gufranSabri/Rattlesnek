@@ -59,7 +59,7 @@ function keyPush(e){
     if(e.keyCode==32){
         playPause();
         if(interval==undefined){
-            keyPresses.push(39);
+            if(!paused)keyPresses.push(39);
             clearInterval(sizeInterval);
             gamePlayed=true
             interval= setInterval(
