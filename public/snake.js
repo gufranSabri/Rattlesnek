@@ -1,7 +1,7 @@
 var gridSize=20, unitSize=20;
-var playerX=playerY=10, xVel=yVel=0, tail=5;
-var appleX=appleY=15, apple; 
-var trail=[], score=0;
+var snakeX=snakeY=10, xVel=yVel=0, length=5;
+var aX=aY=15, apple; 
+var snake=[], score=0;
 
 var keyPresses=[];
 var refreshRate= 1000/18, gamePlayed=false;
@@ -76,7 +76,13 @@ function keyPush(e){
             keyPresses=[]
         }
     }
-    if(interval!=undefined&&(e.keyCode==37||e.keyCode==38||e.keyCode==39||e.keyCode==40))keyPresses.push(e.keyCode)
+    if(interval!=undefined&&(e.keyCode==37||e.keyCode==38||e.keyCode==39||e.keyCode==40||e.keyCode==87||e.keyCode==65||e.keyCode==68||e.keyCode==83)){
+        if(e.keyCode==87)keyPresses.push(38)
+        else if(e.keyCode==65)keyPresses.push(37)
+        else if(e.keyCode==68)keyPresses.push(39)
+        else if(e.keyCode==83)keyPresses.push(40)
+        else keyPresses.push(e.keyCode)
+    }
 }
 function playPause(){
     playing=!playing
@@ -94,42 +100,42 @@ function drawEnv(){
     context.fillRect(0,0,canvas.width,canvas.height);
 
     // context.fillStyle="red";
-    // context.fillRect(appleX*unitSize,appleY*unitSize,unitSize-2,unitSize-2)
+    // context.fillRect(aX*unitSize,aY*unitSize,unitSize-2,unitSize-2)
 
-    context.drawImage(apple,appleX*unitSize,appleY*unitSize,unitSize,unitSize);
+    context.drawImage(apple,aX*unitSize,aY*unitSize,unitSize,unitSize);
 
     context.fillStyle="white";
     context.font="20px monospace";
     context.textAlign="center";
     context.textBaseline="middle"
-    context.fillText((tail-5).toString(),canvas.width-15,15);
+    context.fillText((length-5).toString(),canvas.width-15,15);
 
-    $("#score").html("Score: "+(tail-5))
+    $("#score").html("Score: "+(length-5))
 }
 function snakeUpdates(){
     if(!paused){
-        playerX+=xVel;
-        playerY+=yVel;
+        snakeX+=xVel;
+        snakeY+=yVel;
         wrapAround();
     }
     
     var endFlag=false;
-    for(var i=0;i<trail.length;i++){
+    for(var i=0;i<snake.length;i++){
         context.fillStyle="lime";
-        context.fillRect(trail[i].x*unitSize,trail[i].y*unitSize,unitSize-2,unitSize-2);
-        if(!paused&&trail.length>=5&&trail[i].x==playerX&&trail[i].y==playerY)endFlag=true;
+        context.fillRect(snake[i].x*unitSize,snake[i].y*unitSize,unitSize-2,unitSize-2);
+        if(!paused&&snake.length>=5&&snake[i].x==snakeX&&snake[i].y==snakeY)endFlag=true;
     }
     if(endFlag)gameOver();
 
 
     if(!paused){
-        if(appleX==playerX&&appleY==playerY){
-            appleX=Math.floor(Math.random()*gridSize);
-            appleY=Math.floor(Math.random()*gridSize);
-            tail++;
+        if(aX==snakeX&&aY==snakeY){
+            aX=Math.floor(Math.random()*gridSize);
+            aY=Math.floor(Math.random()*gridSize);
+            length++;
         }
-        trail.push({x:playerX,y:playerY});
-        while(trail.length>tail)trail.shift();
+        snake.push({x:snakeX,y:snakeY});
+        while(snake.length>length)snake.shift();
     }
 }
 function changeDirection(){
@@ -154,25 +160,25 @@ function changeDirection(){
     }
 }
 function wrapAround(){
-    if(playerY<0)playerY=gridSize-1;
-    if(playerX<0)playerX=gridSize-1;
-    if(playerY>gridSize-1)playerY=0;
-    if(playerX>gridSize-1)playerX=0;
+    if(snakeY<0)snakeY=gridSize-1;
+    if(snakeX<0)snakeX=gridSize-1;
+    if(snakeY>gridSize-1)snakeY=0;
+    if(snakeX>gridSize-1)snakeX=0;
 }
 function gameOver(){
-    score= tail-5;
+    score= length-5;
     sizeInterval = setInterval(canvasSetup,refreshRate);
     clearInterval(interval);
     reset();
     scoreUpload();
 }
 function reset(){
-    playerX=playerY=10;
-    appleX=appleY=15; 
+    snakeX=snakeY=10;
+    aX=aY=15; 
     xVel=yVel=0;
-    trail=[];
+    snake=[];
     keyPresses=[];
-    tail=5;
+    length=5;
     interval=undefined;
     $("#play").html("Start")
     playing=false;

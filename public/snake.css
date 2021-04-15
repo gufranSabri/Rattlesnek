@@ -98,3 +98,18 @@ a{
         display: none;
     }
 }
+@media (max-height:700px){
+    h1{font-size: 20px;}
+}
+@media (max-height:650px){
+    .controls{
+        height: 30px;
+    }
+    
+    .eitherSides{font-size: 20px;}
+    #miscBox li{font-size: 18px;}
+}
+@media (max-height:550px){
+    .eitherSides{font-size: 20px;}
+    #miscBox li{font-size: 18px;}
+}

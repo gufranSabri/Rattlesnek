@@ -20,7 +20,7 @@ html(lang="en")
             for(var i=0;i<board.length;i++){
                 var ele = document.createElement("DIV");
                 var s1 = document.createElement("SPAN");
-                s1.innerHTML=board[i].name;
+                s1.innerHTML=(i+1)+". " +board[i].name;
                 var s2 = document.createElement("SPAN");
                 s2.innerHTML="Score: "+ board[i].score;
 
