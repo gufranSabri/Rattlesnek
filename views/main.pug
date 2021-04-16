@@ -15,9 +15,14 @@ html(lang="en")
 
     script.
         var highscore=parseInt('!{highscore}')
+        window.addEventListener("keydown", function(e) {
+        if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
+                e.preventDefault();
+            }
+        }, false);
     body
         .upper
-            img(src="/Images/l.png" width="75px" height="75px" style="position:relative;top:10px")
+            img(src="/Images/l.png" width="50px" height="50px" style="position:relative;top:10px")
         .main
             .eitherSides
                 a(href="/leaderboard" target="_blank")
@@ -41,7 +46,7 @@ html(lang="en")
                         li 
                             span Press the start button or press space to play
                         li 
-                            span Use arrow keys or on WASD to move
+                            span Use arrow keys or WASD to move
                         li 
                             span Collect apples and keep the doctor away ;)
                         li 
@@ -67,5 +72,6 @@ html(lang="en")
             //-         img(src="/Images/arrowRight.png" height="19px" width="14px")
             //- .buttonHolder
                 
-        
+        include ./footer.pug
+
         script(src="/snake.js")

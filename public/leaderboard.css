@@ -29,4 +29,7 @@ h1{
     display: flex;
     justify-content: space-evenly;
 }
+a{
+    text-decoration: none;
+}
 @media (max-width:1500px){#bar{width: 97%;}}

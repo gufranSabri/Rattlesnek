@@ -30,7 +30,7 @@ html(lang="en")
                 )
             })
             document.addEventListener("keyup",function(evt){if(evt.keyCode==13)$("#b").click()});
-            $("a").click(function(){
+            $("#changer").click(function(){
                 $("#b").html($(this).html())
                 if($(this).html()=="Sign Up")$(this).html("Log In")
                 else $(this).html("Sign Up")
@@ -50,5 +50,6 @@ html(lang="en")
                     input#pass(type="password" name="pass" placeholder="Password")
                 button#b(style="cursor:pointer") Log In
             br
-            a(href="#") Sign Up
+            a(href="#")#changer Sign Up
         
+        include ./footer.pug

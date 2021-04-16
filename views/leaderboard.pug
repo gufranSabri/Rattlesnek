@@ -15,6 +15,7 @@ html(lang="en")
         title Rattlesnek - Leaderboard
     script.
         var board= JSON.parse('!{data}')
+        var GOLD="#d4af37", SILVER="#C0C0C0", BRONZE="#cc6633"
         $(document).ready(function(){
             board.sort(function(a, b){return b.score - a.score})
             for(var i=0;i<board.length;i++){
@@ -28,7 +29,11 @@ html(lang="en")
                 ele.appendChild(s1);
                 ele.appendChild(s2);
 
-                document.querySelector("body").appendChild(ele)
+                if(i==0)ele.style.backgroundColor=GOLD
+                if(i==1)ele.style.backgroundColor=SILVER
+                if(i==2)ele.style.backgroundColor=BRONZE
+
+                document.getElementById("lol").appendChild(ele);
             }
         })
     body
@@ -36,3 +41,5 @@ html(lang="en")
             a(href="/")
                 img(src="/Images/l.png" width="75px" height="75px" style="position:relative;top:10px")
         h1 Leaderboard
+        div#lol
+        include ./footer.pug

@@ -55,7 +55,7 @@ app.get("/account",(req,res)=>{
 app.post("/account",(req,res)=>{
     var info= req.body;
     if(!validator(info)){
-        res.send({id:info.name,pass:info.password,prompt:"Username and password must be atleast 8 characters and must contain letters and digits only!!"})
+        res.send({id:info.name,pass:info.password,prompt:"Username and password must only contain letters and digits and password should be atleast 8 characters!!"})
         return;
     }
     MongoClient.connect(url,(err,db)=>{
@@ -88,8 +88,11 @@ app.post("/account",(req,res)=>{
             else{
                 if(info.signUp=="true")res.send({id:info.name,pass:info.password,prompt:"Username already taken!!!"})
                 else{
-                    req.session.userId=info.name;
-                    res.send({prompt:"accepted"})
+                    if(r[0].password==info.password){
+                        req.session.userId=info.name;
+                        res.send({prompt:"accepted"})
+                    }
+                    else res.send({id:info.name,pass:info.password,prompt:"Incorrect username or password!!!"})
                 }
             }
         })
@@ -99,7 +102,7 @@ app.get("/leaderboard",(req,res)=>{
     MongoClient.connect(url,(err,db)=>{
         if(err)res.render("error");
         var dbo= db.db("Snake");
-        var query = { name: /[a-zA-Z1-9]+/g };
+        var query = { name: /[a-zA-Z0-9]+/g };
         dbo.collection("Users").find(query).toArray(function(err1, result) {
             if (err1) res.render("error");
             var leaderboard=[]
@@ -122,7 +125,7 @@ app.listen(process.env.PORT||3000);
 function validator(info){
     if(info.name.length==0)return false;
     if(info.password.length<8)return false;
-    for (let i = 0; i < info.name.length; i++)if(!info.name.charAt(i).match(/[a-zA-Z1-9]+/g))return false;
-    for (let i = 0; i < info.password.length; i++)if(!info.password.charAt(i).match(/[a-zA-Z1-9]+/g))return false;
+    for (let i = 0; i < info.name.length; i++)if(!info.name.charAt(i).match(/[a-zA-Z0-9]+/g))return false;
+    for (let i = 0; i < info.password.length; i++)if(!info.password.charAt(i).match(/[a-zA-Z0-9]+/g))return false;
     return true;
 }

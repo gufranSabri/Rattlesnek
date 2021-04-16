@@ -8,7 +8,7 @@ body{
 .upper{
     width: 100%;
     margin: auto;
-    height: 100px;
+    height: 75px;
     background: #00264d;
     display: flex;
     justify-content: space-evenly;

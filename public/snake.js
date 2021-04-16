@@ -8,14 +8,16 @@ var refreshRate= 1000/18, gamePlayed=false;
 var interval, canvas, context, sizeInterval;
 var playing=false, paused=false;
 
+var codes = ["ArrowLeft","ArrowUp","ArrowRight","ArrowDown","KeyW","KeyA","KeyD","KeyS"]
+
 $(document).ready(function(){
-    $("#left").mousedown(function(){keyPush({keyCode:37})})
-    $("#up").mousedown(function(){keyPush({keyCode:38})})
-    $("#right").mousedown(function(){keyPush({keyCode:39})})
-    $("#down").mousedown(function(){keyPush({keyCode:40})})
-    $("#play").mousedown(function(){keyPush({keyCode:32})})
+    $("#left").mousedown(function(){keyPush({code:"ArrowLeft"})})
+    $("#up").mousedown(function(){keyPush({code:"ArrowUp"})})
+    $("#right").mousedown(function(){keyPush({code:"ArrowRight"})})
+    $("#down").mousedown(function(){keyPush({code:"ArrowDown"})})
+    $("#play").mousedown(function(){keyPush({code:"Space"})})
     $("#logout").click(function(){location.href="/logout"})
-    $("#settings").click(function(){$(this).html("Coming soon...")})
+    $("#settings").click(function(){$(this).html("There are none :)")})
 
     canvas= document.getElementById("cvs");
     sizeInterval = setInterval(canvasSetup,refreshRate);
@@ -56,10 +58,10 @@ function canvasSetup(){
     }
 }
 function keyPush(e){
-    if(e.keyCode==32){
+    if(e.code=="Space"){
         playPause();
         if(interval==undefined){
-            if(!paused)keyPresses.push(39);
+            if(!paused)keyPresses.push("ArrowRight");
             clearInterval(sizeInterval);
             gamePlayed=true
             interval= setInterval(
@@ -76,12 +78,12 @@ function keyPush(e){
             keyPresses=[]
         }
     }
-    if(interval!=undefined&&(e.keyCode==37||e.keyCode==38||e.keyCode==39||e.keyCode==40||e.keyCode==87||e.keyCode==65||e.keyCode==68||e.keyCode==83)){
-        if(e.keyCode==87)keyPresses.push(38)
-        else if(e.keyCode==65)keyPresses.push(37)
-        else if(e.keyCode==68)keyPresses.push(39)
-        else if(e.keyCode==83)keyPresses.push(40)
-        else keyPresses.push(e.keyCode)
+    if(interval!=undefined&&codes.includes(e.code)){
+        if(e.code=="KeyW")keyPresses.push("ArrowUp")
+        else if(e.code=="KeyA")keyPresses.push("ArrowLeft")
+        else if(e.code=="KeyD")keyPresses.push("ArrowRight")
+        else if(e.code=="KeyS")keyPresses.push("ArrowDown")
+        else keyPresses.push(e.code)
     }
 }
 function playPause(){
@@ -142,19 +144,19 @@ function changeDirection(){
     if(keyPresses.length==0)return;
     var code= keyPresses.pop();
 
-    if(code==37&&xVel!=1){
+    if(code=="ArrowLeft"&&xVel!=1){
         xVel=-1;
         yVel=0;
     }
-    if(code==38&&yVel!=1){
+    if(code=="ArrowUp"&&yVel!=1){
         xVel=0;
         yVel=-1;
     }
-    if(code==39&&xVel!=-1){
+    if(code=="ArrowRight"&&xVel!=-1){
         xVel=1;
         yVel=0;
     }
-    if(code==40&&yVel!=-1){
+    if(code=="ArrowDown"&&yVel!=-1){
         xVel=0
         yVel=1;
     }
