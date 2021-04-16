@@ -93,6 +93,16 @@ a{
     text-decoration: none;
     color: inherit;
 }
+audio{
+    width: 70%;
+    height: 30px;
+    outline: none;
+}
+.tabs .subs{font-size: 25px;}
+#actualSettings{
+    text-align: left;
+    display: none;
+}
 @media (max-width:1050px){
     .eitherSides{
         display: none;
@@ -102,12 +112,10 @@ a{
     h1{font-size: 20px;}
 }
 @media (max-height:650px){
-    .controls{
-        height: 30px;
-    }
-    
+    .controls{height: 30px;}
     .eitherSides{font-size: 20px;}
     #miscBox li{font-size: 18px;}
+    .tabs .subs{font-size: 15px;}
 }
 @media (max-height:550px){
     .eitherSides{font-size: 20px;}

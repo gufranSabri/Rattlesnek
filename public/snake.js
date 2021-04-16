@@ -10,6 +10,9 @@ var playing=false, paused=false;
 
 var codes = ["ArrowLeft","ArrowUp","ArrowRight","ArrowDown","KeyW","KeyA","KeyD","KeyS"]
 
+var bgMusic, gameOverSound, pickUpSound, sounds=true;
+var toggle=true, musicLoadInterval;
+
 $(document).ready(function(){
     $("#left").mousedown(function(){keyPush({code:"ArrowLeft"})})
     $("#up").mousedown(function(){keyPush({code:"ArrowUp"})})
@@ -17,7 +20,8 @@ $(document).ready(function(){
     $("#down").mousedown(function(){keyPush({code:"ArrowDown"})})
     $("#play").mousedown(function(){keyPush({code:"Space"})})
     $("#logout").click(function(){location.href="/logout"})
-    $("#settings").click(function(){$(this).html("There are none :)")})
+    $("#settings").click(function(){if(toggle)$("#actualSettings").toggle()})
+
 
     canvas= document.getElementById("cvs");
     sizeInterval = setInterval(canvasSetup,refreshRate);
@@ -25,6 +29,28 @@ $(document).ready(function(){
 
     apple = new Image();
     apple.src = '/Images/apple.png';
+
+    bgMusic= document.getElementById("bg");
+    bgMusic.volume=0.2
+    gameOverSound= document.getElementById("go");
+    pickUpSound= document.getElementById("pu");
+
+    $("#music,#sounds,#vol").click(function(){
+        toggle=false;
+        setTimeout(function(){toggle=true},50);
+    })
+    musicLoadInterval=setInterval(function(){
+        if(bgMusic.readyState&&gameOverSound.readyState&&pickUpSound.readyState){
+            $("#music,#sounds,#vol").on("input change",function(){
+                if(document.getElementById("music").checked)bgMusic.play();
+                else bgMusic.pause();
+        
+                sounds=document.getElementById("sounds").checked
+                bgMusic.volume= parseInt(document.getElementById("vol").value)/10
+            })
+            clearInterval(musicLoadInterval)
+        }
+    },50)
 })
 function updateGame(){
     paused=false
@@ -89,6 +115,9 @@ function keyPush(e){
 function playPause(){
     playing=!playing
     if(playing){
+        if(document.getElementById("music").checked)bgMusic.play()
+        gameOverSound.pause();
+        gameOverSound.currentTime=0;
         $("#play").html("Pause");
     }
     else{
@@ -135,6 +164,7 @@ function snakeUpdates(){
             aX=Math.floor(Math.random()*gridSize);
             aY=Math.floor(Math.random()*gridSize);
             length++;
+            if(sounds)pickUpSound.play()
         }
         snake.push({x:snakeX,y:snakeY});
         while(snake.length>length)snake.shift();
@@ -170,6 +200,10 @@ function wrapAround(){
 function gameOver(){
     score= length-5;
     sizeInterval = setInterval(canvasSetup,refreshRate);
+    if(sounds){
+        gameOverSound.play()
+        bgMusic.pause()
+    }
     clearInterval(interval);
     reset();
     scoreUpload();

@@ -28,8 +28,21 @@ html(lang="en")
                 a(href="/leaderboard" target="_blank")
                     .tabs#leaderboard
                         span Leaderboard
-                .tabs#settings
+                .tabs#settings(style="height:auto")
                     span Settings
+                    #actualSettings
+                        input#music(type="checkbox" checked)
+                        span.subs Music
+                        br
+                        input#sounds(type="checkbox" checked)
+                        span.subs Sounds
+                        br
+                        br
+                        span.subs Music Volume
+                        br
+                        input#vol(type="range" min="0" max="10"  value="2")
+                        br
+                    
                 .tabs#logout
                     span Log out
                 #miscBox.scoreUpdates
@@ -73,5 +86,12 @@ html(lang="en")
             //- .buttonHolder
                 
         include ./footer.pug
+        
+        audio#bg(loop autoplay)
+            source(src="/Audio/bgMusic.mp3")
+        audio#go
+            source(src="/Audio/gameOver.mp3")
+        audio#pu
+            source(src="/Audio/pickUp.mp3")
 
         script(src="/snake.js")
