@@ -1,7 +1,7 @@
 # Rattlesnek
 
 Simple snake game using only JS. Has a leaderboard where you can compete with other players.
-https://rattlesnek.herokuapp.com/account
+https://rattlesnek.herokuapp.com/
 
 ![This is an image](/public/Images/l.png)
 
