@@ -163,6 +163,12 @@ function snakeUpdates(){
         if(aX==snakeX&&aY==snakeY){
             aX=Math.floor(Math.random()*gridSize);
             aY=Math.floor(Math.random()*gridSize);
+
+            while(aX==19 && aY == 0){
+                aX=Math.floor(Math.random()*gridSize);
+                aY=Math.floor(Math.random()*gridSize);
+            }
+
             length++;
             if(sounds)pickUpSound.play()
         }
