@@ -152,7 +152,8 @@ function snakeUpdates(){
     
     var endFlag=false;
     for(var i=0;i<snake.length;i++){
-        context.fillStyle="lime";
+        if(aX==snake[i].x&&aY==snake[i].y)context.fillStyle= "rgba(0, 255, 0, 0.3)"
+        else context.fillStyle="lime";
         context.fillRect(snake[i].x*unitSize,snake[i].y*unitSize,unitSize-2,unitSize-2);
         if(!paused&&snake.length>=5&&snake[i].x==snakeX&&snake[i].y==snakeY)endFlag=true;
     }
