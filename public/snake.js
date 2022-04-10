@@ -38,10 +38,6 @@ $(document).ready(function(){
     bgMusic= document.getElementById("bg");
     bgMusic.volume=0.2
 
-    //replicatiting interaction
-    // $("#ins5").click()
-    // bgMusic.play()
-    
     gameOverSound= document.getElementById("go");
     pickUpSound= document.getElementById("pu");
 
@@ -63,6 +59,11 @@ $(document).ready(function(){
     },50)
 })
 function makeFudailChanges(){
+    if(id!='Tokururu'){
+        console.log("Only Fudail can access this")
+        return;
+    }
+
     $("#logo").attr({
         src: '/Images/fudail/logo.png',
         width: '80px'
