@@ -15,6 +15,8 @@ html(lang="en")
 
     script.
         var highscore=parseInt('!{highscore}')
+        var prefApple='!{prefApple}'
+        var id='!{name}'
         window.addEventListener("keydown", function(e) {
         if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
                 e.preventDefault();
@@ -22,7 +24,7 @@ html(lang="en")
         }, false);
     body
         .upper
-            img(src="/Images/l.png" width="50px" height="50px" style="position:relative;top:10px")
+            img#logo(src="/Images/l.png" width="50px" height="50px" style="position:relative;top:10px")
         .main
             .eitherSides
                 a(href="/leaderboard" target="_blank")
@@ -31,6 +33,19 @@ html(lang="en")
                 .tabs#settings(style="height:auto")
                     span Settings
                     #actualSettings
+                        span.subs Change Apple
+                        div#applePref
+                            input.appleSelection#default(type="radio" name="appleSelection")
+                            img(src="/Images/default.png" width="20px" height="20px" style="position:relative;top:3px")
+                            span(style='font-size:20px;position:relative;top:-5px') &nbsp;default
+                            br
+                            input.appleSelection#apple(type="radio" name="appleSelection")
+                            img(src="/Images/apple.png" width="20px" height="20px" style="position:relative;top:3px")
+                            span(style='font-size:20px;position:relative;top:-5px') &nbsp;apple
+                        
+                        br
+                        span.subs Audio
+                        br
                         input#music(type="checkbox" checked)
                         span.subs Music
                         br
@@ -42,6 +57,7 @@ html(lang="en")
                         br
                         input#vol(type="range" min="0" max="10"  value="2")
                         br
+
                     
                 .tabs#logout
                     span Log out
@@ -57,22 +73,22 @@ html(lang="en")
                 #miscBox(style="text-align: left;")
                     ul
                         li 
-                            span Press the start button or press space to play
+                            span#ins1 Press the start button or press space to play
                         li 
-                            span Use arrow keys or WASD to move
+                            span#ins2 Use arrow keys or WASD to move
                         li 
-                            span Collect apples and keep the doctor away ;)
+                            span#ins3 Collect apples and keep the doctor away ;)
                         li 
-                            span You can press space to pause
+                            span#ins4 You can press space to pause
                         li 
-                            span Enjoy!
+                            span#ins5 Enjoy!
 
         .bottom
             .buttonHolder
                 button.controls#play(style="width:100px") Start
             h1(style="text-align:center") Cannot play on touch devices!
             
-            //- br
+            br
             //- .buttonHolder
             //-     button.controls#up
             //-         img(src="/Images/arrowUp.png" height="14px" width="19px")
@@ -87,8 +103,8 @@ html(lang="en")
                 
         include ./footer.pug
         
-        audio#bg(loop autoplay)
-            source(src="/Audio/bgMusic.mp3")
+        audio#bg(loop)
+            source#bgm(src="/Audio/bgMusic.mp3")
         audio#go
             source(src="/Audio/gameOver.mp3")
         audio#pu

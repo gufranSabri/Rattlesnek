@@ -29,7 +29,7 @@ app.get('/',(req,res)=>{
             if(err)res.render("error");
             var dbo= db.db("Snake");
             dbo.collection("Users").find({name:req.session.userId}).toArray((e,r)=>{
-                res.render("main",{name:req.session.userId,highscore:r[0].highscore})
+                res.render("main",{name:req.session.userId,highscore:r[0].highscore,prefApple:r[0].prefApple})
             })
         })
     }
@@ -46,7 +46,8 @@ app.post('/',(req,res)=>{
             return;
         }
         var dbo= db.db("Snake");
-        dbo.collection("Users").updateOne({name:req.session.userId},{$set:{highscore:info.score}}, function(e, r) {res.send("lol")});
+        if(info.score!=undefined) dbo.collection("Users").updateOne({name:req.session.userId},{$set:{highscore:info.score}}, function(e, r) {res.send("lol")});
+        else dbo.collection("Users").updateOne({name:req.session.userId},{$set:{prefApple:info.prefApple}}, function(e, r) {res.send("lol")});
     })
 })
 app.get("/account",(req,res)=>{

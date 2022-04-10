@@ -14,6 +14,9 @@ var bgMusic, gameOverSound, pickUpSound, sounds=true;
 var toggle=true, musicLoadInterval;
 
 $(document).ready(function(){
+    var dateObj = new Date()
+    if(id=='Tokururu'&&(dateObj.getDate()>12||dateObj.getMonth()>3||dateObj.getFullYear()>2022))makeFudailChanges()
+
     $("#left").mousedown(function(){keyPush({code:"ArrowLeft"})})
     $("#up").mousedown(function(){keyPush({code:"ArrowUp"})})
     $("#right").mousedown(function(){keyPush({code:"ArrowRight"})})
@@ -21,21 +24,28 @@ $(document).ready(function(){
     $("#play").mousedown(function(){keyPush({code:"Space"})})
     $("#logout").click(function(){location.href="/logout"})
     $("#settings").click(function(){if(toggle)$("#actualSettings").toggle()})
-
+    $('#apple,#default').click(function() {if($(this).is(':checked')) { udpateApplePref($(this).attr("id")) }});
+    $("#"+prefApple).prop("checked", true);
 
     canvas= document.getElementById("cvs");
     sizeInterval = setInterval(canvasSetup,refreshRate);
     context= canvas.getContext("2d");
 
     apple = new Image();
-    apple.src = '/Images/apple.png';
+    if(prefApple=='apple')apple.src = '/Images/'+prefApple+'.png';
+    else if(prefApple!='default') apple.src = '/Images/fudail/'+prefApple+'.png';
 
     bgMusic= document.getElementById("bg");
     bgMusic.volume=0.2
+
+    //replicatiting interaction
+    $("#ins5").click()
+    bgMusic.play()
+    
     gameOverSound= document.getElementById("go");
     pickUpSound= document.getElementById("pu");
 
-    $("#music,#sounds,#vol").click(function(){
+    $("#music,#sounds,#vol,.appleSelection").click(function(){
         toggle=false;
         setTimeout(function(){toggle=true},50);
     })
@@ -52,6 +62,48 @@ $(document).ready(function(){
         }
     },50)
 })
+function makeFudailChanges(){
+    $("#logo").attr({
+        src: '/Images/fudail/logo.png',
+        width: '80px'
+    });
+    var apples = ['bigRedRupee','bombosMedallion','fireElement', 'fireMedallion', 'heartContainer2','moonPearl', 'redKinstone',]
+
+    for (let i = 0; i < apples.length; i++) {
+        var newRadio = "<input type='radio' name='appleSelection' class='appleSelection' id='"+apples[i]+"'>"
+        var newImage = "<img src='/Images/fudail/"+apples[i]+".png' width='20px' height='20px' style='position:relative;top:3px;margin:2px'>"
+        var newSpan = "<span style='font-size:20px;position:relative;top:-5px' >   "+apples[i]+"</span>"
+        $("#applePref").append("<br>",newRadio,newImage,newSpan); 
+
+        $('#'+apples[i]).click(function() {if($(this).is(':checked')) { udpateApplePref($(this).attr("id")) }});
+    }
+
+    $("#ins1").html("Please floor it :(")
+    $("#ins2").html("Please floor it :(")
+    $("#ins3").html("Please floor it :(")
+    $("#ins4").html("Please floor it :(")
+    $("#ins5").html("Please floor it :(")
+
+    $(".upper").css("background", "#072c1d");
+    $("body").css("background-color", "#072c1d");
+    $(".controls, .tabs, #miscBox").css("border","#7ce9bc 1px solid")
+    $(".scoreUpdates").css("background-color", "#7ce9bc");
+
+    $(".controls, .tabs").hover(function(){
+        $(this).css("background-color", "#7ce9bc");
+        $(this).css("color", "black");
+    },function(){
+        $(this).css("background-color", "transparent");
+        $(this).css("color", "white");
+    })
+
+    var audio = $("#bg");     
+    $("#bgm").attr("src", '/Audio/zelda.mp3');
+    audio[0].pause()
+    audio[0].load()
+    // audio[0].play()
+}
+
 function updateGame(){
     paused=false
     canvasSetup();
@@ -60,8 +112,12 @@ function updateGame(){
 }
 function canvasSetup(){
     unitSize=canvas.width/20;
-    if($(document).height()/$(document).width()>=2)canvas.height=canvas.width=($(document).width()/1.1 - (($(document).width()/1.1)%20));
-    else canvas.height=canvas.width=($(document).height()/2 - (($(document).height()/2)%20));
+    if($(document).height()/$(document).width()>=2){
+        canvas.height=canvas.width=($(document).width()/1.1 - (($(document).width()/1.1)%20));
+    }
+    else{
+        canvas.height=canvas.width=($(document).height()/2 - (($(document).height()/2)%20));
+    }
 
     if(paused){
         drawEnv();
@@ -71,7 +127,12 @@ function canvasSetup(){
         context.fillStyle="black";
         context.fillRect(0,0,canvas.width,canvas.height);
         textInit()
-        context.fillText("Press space to start the game",canvas.width/2,canvas.height/2);
+
+        var dateObj = new Date()
+        var prTe = "Press space to start the game"
+        if(dateObj.getMonth()==3&&dateObj.getDate()==13)prTe="Happy birthday Fudail!"
+
+        context.fillText(prTe,canvas.width/2,canvas.height/2);
         window.addEventListener("keydown",keyPush);
     }
     else if(!playing){
@@ -130,10 +191,12 @@ function drawEnv(){
     context.fillStyle="black";
     context.fillRect(0,0,canvas.width,canvas.height);
 
-    // context.fillStyle="red";
-    // context.fillRect(aX*unitSize,aY*unitSize,unitSize-2,unitSize-2)
 
-    context.drawImage(apple,aX*unitSize,aY*unitSize,unitSize,unitSize);
+    if(prefApple=='default'){
+        context.fillStyle="red";
+        context.fillRect(aX*unitSize,aY*unitSize,unitSize-2,unitSize-2)
+    }
+    else context.drawImage(apple,aX*unitSize,aY*unitSize,unitSize,unitSize);
 
     context.fillStyle="white";
     context.font="20px monospace";
@@ -247,4 +310,17 @@ function scoreUpload(){
         )
     }
     else $("#logs").html("...")
+}
+function udpateApplePref(aP){
+    if(aP==prefApple)return;
+    prefApple=aP
+    if(prefApple=='apple')apple.src = '/Images/'+prefApple+'.png';
+    else if(prefApple!='default') apple.src = '/Images/fudail/'+prefApple+'.png';
+
+    $.post("/", {prefApple:prefApple},
+        function(data,status){
+            if(data.prompt=="error")location.href="/error"
+            if(status!="success")$("#logs").html("Your preference was not processed. Please sign out and sign in again...")
+        }
+    )
 }
