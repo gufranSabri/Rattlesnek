@@ -75,7 +75,12 @@ function makeFudailChanges(){
         var newSpan = "<span style='font-size:20px;position:relative;top:-5px' >   "+apples[i]+"</span>"
         $("#applePref").append("<br>",newRadio,newImage,newSpan); 
 
-        $('#'+apples[i]).click(function() {if($(this).is(':checked')) { udpateApplePref($(this).attr("id")) }});
+        $('#'+apples[i]).click(function() {
+            toggle=false;
+            setTimeout(function(){toggle=true},50);
+            if($(this).is(':checked')) udpateApplePref($(this).attr("id")) 
+        });
+        
     }
 
     $("#ins1").html("Please floor it :(")
