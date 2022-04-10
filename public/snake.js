@@ -60,7 +60,7 @@ $(document).ready(function(){
 })
 function makeFudailChanges(){
     if(id!='Tokururu'){
-        console.log("Only Fudail can access this")
+        console.log("Only Fudail can access this. Also stop snooping >:(")
         return;
     }
 
@@ -84,11 +84,11 @@ function makeFudailChanges(){
         
     }
 
-    $("#ins1").html("Please floor it :(")
-    $("#ins2").html("Please floor it :(")
-    $("#ins3").html("Please floor it :(")
+    $("#ins1").html("You're an NPC. if you want to play, you need to be human")
+    $("#ins2").html("If being an NPC meant that you're a good friend, then you are the biggest NPC ever. <3")
+    $("#ins3").html("By the way, Zelda said hi <3")
     $("#ins4").html("Please floor it :(")
-    $("#ins5").html("Please floor it :(")
+    $("#ins5").html("Actually don't :)")
 
     $(".upper").css("background", "#072c1d");
     $("body").css("background-color", "#072c1d");
@@ -208,7 +208,7 @@ function drawEnv(){
     context.font="20px monospace";
     context.textAlign="center";
     context.textBaseline="middle"
-    context.fillText((length-5).toString(),canvas.width-15,15);
+    if(id!='Tokururu')context.fillText((length-5).toString(),canvas.width-15,15);
 
     $("#score").html("Score: "+(length-5))
 }
