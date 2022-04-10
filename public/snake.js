@@ -39,8 +39,8 @@ $(document).ready(function(){
     bgMusic.volume=0.2
 
     //replicatiting interaction
-    $("#ins5").click()
-    bgMusic.play()
+    // $("#ins5").click()
+    // bgMusic.play()
     
     gameOverSound= document.getElementById("go");
     pickUpSound= document.getElementById("pu");
@@ -152,6 +152,7 @@ function canvasSetup(){
 function keyPush(e){
     if(e.code=="Space"){
         playPause();
+        bgMusic.play()
         if(interval==undefined){
             if(!paused)keyPresses.push("ArrowRight");
             clearInterval(sizeInterval);
