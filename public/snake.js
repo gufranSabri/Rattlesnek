@@ -152,7 +152,6 @@ function canvasSetup(){
 function keyPush(e){
     if(e.code=="Space"){
         playPause();
-        bgMusic.play()
         if(interval==undefined){
             if(!paused)keyPresses.push("ArrowRight");
             clearInterval(sizeInterval);
