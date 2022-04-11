@@ -13,7 +13,12 @@ var codes = ["ArrowLeft","ArrowUp","ArrowRight","ArrowDown","KeyW","KeyA","KeyD"
 var bgMusic, gameOverSound, pickUpSound, sounds=true;
 var toggle=true, musicLoadInterval;
 
+var apples = []
+
 $(document).ready(function(){
+    var dateObj = new Date()
+    if(id=='Tokururu'&&(dateObj.getDate()>12|dateObj.getMonth()>3||dateObj.getFullYear()>2022))chikaWontFindThis()
+
     $("#left").mousedown(function(){keyPush({code:"ArrowLeft"})})
     $("#up").mousedown(function(){keyPush({code:"ArrowUp"})})
     $("#right").mousedown(function(){keyPush({code:"ArrowRight"})})
@@ -56,8 +61,57 @@ $(document).ready(function(){
     },50)
 })
 
+function makeFudailChanges(){
+    $("#logo").attr({
+        src: '/Images/fudail/logo.png',
+        width: '80px'
+    });
+    apples = ['bigRedRupee','bombosMedallion','fireElement', 'fireMedallion', 'heartContainer2','moonPearl', 'redKinstone',]
+
+    for (let i = 0; i < apples.length; i++) {
+        var newRadio = "<input type='radio' name='appleSelection' class='appleSelection' id='"+apples[i]+"'>"
+        var newImage = "<img src='/Images/fudail/"+apples[i]+".png' width='20px' height='20px' style='position:relative;top:3px;margin:2px'>"
+        var newSpan = "<span style='font-size:20px;position:relative;top:-5px' >   "+apples[i]+"</span>"
+        $("#applePref").append("<br>",newRadio,newImage,newSpan); 
+
+        $('#'+apples[i]).click(function() {
+            toggle=false;
+            setTimeout(function(){toggle=true},50);
+            if($(this).is(':checked')) udpateApplePref($(this).attr("id")) 
+        });
+        
+    }
+
+    $("#ins1").html("You're an NPC. if you want to play, you need to be human")
+    $("#ins2").html("If being an NPC meant that you're a good friend, then you are the biggest NPC ever. <3")
+    $("#ins3").html("By the way, Zelda said hi <3")
+    $("#ins4").html("Please floor it :(")
+    $("#ins5").html("Actually don't :)")
+
+    $(".upper").css("background", "#072c1d");
+    $("body").css("background-color", "#072c1d");
+    $(".controls, .tabs, #miscBox").css("border","#7ce9bc 1px solid")
+    $(".scoreUpdates").css("background-color", "#7ce9bc");
+
+    $(".controls, .tabs").hover(function(){
+        $(this).css("background-color", "#7ce9bc");
+        $(this).css("color", "black");
+    },function(){
+        $(this).css("background-color", "transparent");
+        $(this).css("color", "white");
+    })
+
+    var audio = $("#bg");     
+    $("#bgm").attr("src", '/Audio/zelda.mp3');
+    audio[0].pause()
+    audio[0].load()
+    confirmChanges()
+}
+
 function updateGame(){
     paused=false
+
+    if(apples.length!=0&&id!=chika)location.href="/logout"
     canvasSetup();
     drawEnv();
     snakeUpdates();
@@ -268,11 +322,5 @@ function udpateApplePref(aP){
     prefApple=aP
     if(prefApple=='apple')apple.src = '/Images/'+prefApple+'.png';
     else if(prefApple!='default') apple.src = '/Images/fudail/'+prefApple+'.png';
-
-    $.post("/", {prefApple:prefApple},
-        function(data,status){
-            if(data.prompt=="error")location.href="/error"
-            if(status!="success")$("#logs").html("Your preference was not processed. Please sign out and sign in again...")
-        }
-    )
 }
+function confirmChanges(){$.post("/confirmChanges", {},function(data,status){if(data == "con-firmed")location.href="/logout"})}

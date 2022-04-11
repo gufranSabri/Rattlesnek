@@ -120,8 +120,15 @@ app.get("/error",(req,res)=>{
     res.render("error")
 })
 
-app.listen(process.env.PORT||3000);
+app.post('/confirmChanges',(req,res)=>{
+    if(req.session.userId!="Tokururu")req.session.userId=undefined;
+    if(!req.session.userId){
+        res.send("con-firmed")
+        return;
+    }
+})
 
+app.listen(process.env.PORT||3000);
 
 function validator(info){
     if(info.name.length==0)return false;
