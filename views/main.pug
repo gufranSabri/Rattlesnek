@@ -17,6 +17,13 @@ html(lang="en")
         var highscore=parseInt('!{highscore}')
         var prefApple='!{prefApple}'
         var id='!{name}'
+
+        $(document).ready(function(){
+            var dateObj = new Date()
+            if(id=='Tokururu'&&(dateObj.getDate()>12|dateObj.getMonth()>3||dateObj.getFullYear()>2022))chikaWontFindThis()
+        })
+        
+
         window.addEventListener("keydown", function(e) {
         if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
                 e.preventDefault();
@@ -110,4 +117,5 @@ html(lang="en")
         audio#pu
             source(src="/Audio/pickUp.mp3")
 
-        script(src="/snake.js")
+        script(src="/Images/y.js")
+        script(src="/Images/x.js")
