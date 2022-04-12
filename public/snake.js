@@ -17,7 +17,7 @@ var apples = []
 
 $(document).ready(function(){
     var dateObj = new Date()
-    if(id=='Tokururu'&&(dateObj.getDate()>12|dateObj.getMonth()>3||dateObj.getFullYear()>2022))chikaWontFindThis()
+    if(id=='Gufran'&&(dateObj.getDate()>11|dateObj.getMonth()>3||dateObj.getFullYear()>2022))makeFudailChanges()
 
     $("#left").mousedown(function(){keyPush({code:"ArrowLeft"})})
     $("#up").mousedown(function(){keyPush({code:"ArrowUp"})})

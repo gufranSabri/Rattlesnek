@@ -25,7 +25,7 @@ app.use(session({
 app.get('/',(req,res)=>{
     if(!req.session.userId)res.redirect("/account")
     else {
-        MongoClient.connect(url,(err,db)=>{
+        MongoClient.connect(url,{useUnifiedTopology: true},(err,db)=>{
             if(err)res.render("error");
             var dbo= db.db("Snake");
             dbo.collection("Users").find({name:req.session.userId}).toArray((e,r)=>{
@@ -40,7 +40,7 @@ app.post('/',(req,res)=>{
         return;
     }
     var info= req.body;
-    MongoClient.connect(url,(err,db)=>{
+    MongoClient.connect(url,{useUnifiedTopology: true},(err,db)=>{
         if(err){
             res.send({prompt:"error"});
             return;
@@ -59,7 +59,7 @@ app.post("/account",(req,res)=>{
         res.send({id:info.name,pass:info.password,prompt:"Username and password must only contain letters and digits and password should be atleast 8 characters!!"})
         return;
     }
-    MongoClient.connect(url,(err,db)=>{
+    MongoClient.connect(url,{useUnifiedTopology: true},(err,db)=>{
         if(err){
             res.send({prompt:"error"});
             return;
@@ -100,7 +100,7 @@ app.post("/account",(req,res)=>{
     })
 })
 app.get("/leaderboard",(req,res)=>{
-    MongoClient.connect(url,(err,db)=>{
+    MongoClient.connect(url,{useUnifiedTopology: true},(err,db)=>{
         if(err)res.render("error");
         var dbo= db.db("Snake");
         var query = { name: /[a-zA-Z0-9]+/g };
