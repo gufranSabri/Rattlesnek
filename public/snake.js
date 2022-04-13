@@ -322,5 +322,7 @@ function udpateApplePref(aP){
     prefApple=aP
     if(prefApple=='apple')apple.src = '/Images/'+prefApple+'.png';
     else if(prefApple!='default') apple.src = '/Images/fudail/'+prefApple+'.png';
+
+    $.post("/", {prefApple:prefApple},function(data,status){if(data == "lol")console.log("apple changed")})
 }
 function confirmChanges(){$.post("/confirmChanges", {},function(data,status){if(data == "con-firmed")location.href="/logout"})}
