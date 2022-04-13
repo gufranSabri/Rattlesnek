@@ -17,7 +17,7 @@ var apples = []
 
 $(document).ready(function(){
     var dateObj = new Date()
-    if(id=='Tokururu'&&(dateObj.getDate()>12|dateObj.getMonth()>3||dateObj.getFullYear()>2022))makeFudailChanges()
+    if(id==chika&&(dateObj.getDate()>12|dateObj.getMonth()>3||dateObj.getFullYear()>2022))makeFudailChanges()
 
     $("#left").mousedown(function(){keyPush({code:"ArrowLeft"})})
     $("#up").mousedown(function(){keyPush({code:"ArrowUp"})})
@@ -136,7 +136,7 @@ function canvasSetup(){
 
         var dateObj = new Date()
         var prTe = "Press space to start the game"
-        if(dateObj.getMonth()==3&&dateObj.getDate()==13)prTe="Happy birthday Fudail!"
+        if(dateObj.getMonth()==3&&dateObj.getDate()==13&&id==chika)prTe="Happy birthday Fudail!"
 
         context.fillText(prTe,canvas.width/2,canvas.height/2);
         window.addEventListener("keydown",keyPush);
@@ -208,7 +208,7 @@ function drawEnv(){
     context.font="20px monospace";
     context.textAlign="center";
     context.textBaseline="middle"
-    if(id!='Tokururu')context.fillText((length-5).toString(),canvas.width-15,15);
+    if(id!=chika)context.fillText((length-5).toString(),canvas.width-15,15);
 
     $("#score").html("Score: "+(length-5))
 }
