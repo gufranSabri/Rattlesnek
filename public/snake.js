@@ -27,7 +27,7 @@ $(document).ready(function(){
     $("#logout").click(function(){location.href="/logout"})
     $("#settings").click(function(){if(toggle)$("#actualSettings").toggle()})
     $('#apple,#default').click(function() {if($(this).is(':checked')) { udpateApplePref($(this).attr("id")) }});
-    // $("#"+prefApple).prop("checked", true);
+    $("#"+prefApple).prop("checked", true);
 
     canvas= document.getElementById("cvs");
     sizeInterval = setInterval(canvasSetup,refreshRate);
